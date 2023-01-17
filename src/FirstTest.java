@@ -7,7 +7,6 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -187,6 +186,19 @@ public class FirstTest {
         WebElement element = waitForElementPresent(by, error_message,timeoutInSecond);
         element.clear();
         return element;
+    }
+
+    private boolean assertElementHasText(By by, String element_text, String error_message, long timeoutInSecond)
+    {
+        WebElement element = waitForElementPresent(by, error_message, timeoutInSecond);
+
+        String text = element.getText();
+        Assert.assertEquals(
+                error_message,
+                element_text,
+                text
+        );
+        return true;
     }
 }
 
