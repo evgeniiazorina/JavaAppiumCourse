@@ -191,6 +191,47 @@ public class FirstTest {
         );
     }
 
+    @Test
+    public void testSearchWordCheck()
+    {
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/fragment_onboarding_skip_button"),
+                "Onboarding cannot open",
+                5
+        );
+
+        waitForElementAndClick(
+                By.xpath("//*[contains(@text, 'Search Wikipedia')]"),
+                "Cannot find Search Wikipedia input",
+                5
+        );
+
+        waitForElementAndSendKeys(
+                By.xpath("//*[contains(@text, 'Search Wikipedia')]"),
+                "Java",
+                "Cannot find search input",
+                5
+        );
+
+        waitForElementPresent(
+                By.xpath("//*[@resource-id='org.wikipedia:id/fragment_search_results']//*[@index='0']//*[contains(@text, 'Java')]"),
+                "Cannot find Java text",
+                15
+        );
+
+        waitForElementPresent(
+                By.xpath("//*[@resource-id='org.wikipedia:id/fragment_search_results']//*[@index='1']//*[contains(@text, 'Java')]"),
+                "Cannot find Java text",
+                15
+        );
+
+        waitForElementPresent(
+                By.xpath("//*[@resource-id='org.wikipedia:id/fragment_search_results']//*[@index='2']//*[contains(@text, 'Java')]"),
+                "Cannot find Java text",
+                15
+        );
+    }
+
     private WebElement waitForElementPresent(By by, String error_message, long timeoutInSeconds)
     {
         WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
