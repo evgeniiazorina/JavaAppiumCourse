@@ -33,6 +33,7 @@ public class FirstTest {
         capabilities.setCapability("app", "/Users/eugeniazorina/qa/JavaAppiumCourse/apks/org.wikipedia.apk");
 
         driver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
+        driver.rotate(ScreenOrientation.PORTRAIT);
     }
 
     @After
