@@ -47,4 +47,52 @@ public class MyListsTests extends CoreTestCase {
 
         MyListsPageObject.swipeByArticleToDelete(article_title);
     }
+
+    @Test
+    public void testSaveTwoArticlesToMyList()
+    {
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
+        SearchPageObject.initSearchInput();
+        SearchPageObject.typeSearchLine("Java");
+        SearchPageObject.clickByArticleWithSubstring("Object-oriented programming language");
+
+        ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
+        ArticlePageObject.waitForTitleElement();
+        String first_article_title = ArticlePageObject.getArticleTitle();
+
+        if (Platform.getInstance().isAndroid()) {
+            ArticlePageObject.addArticleToMyList(name_of_folder);
+        } else {
+            ArticlePageObject.addArticlesToMySaved();
+        }
+
+        ArticlePageObject.closeArticle();
+
+        SearchPageObject.initSearchInput();
+        SearchPageObject.typeSearchLine("Appium");
+        SearchPageObject.clickByArticleWithSubstring("Appium");
+
+        ArticlePageObject.waitForTitleElement();
+        String second_article_title = ArticlePageObject.getArticleTitle();
+
+        if (Platform.getInstance().isAndroid()) {
+            ArticlePageObject.addArticleToMyList(name_of_folder);
+        } else {
+            ArticlePageObject.addArticlesToMySaved();
+        }
+
+        ArticlePageObject.closeArticle();
+
+        NavigationUI NavigationUI = NavigationUIFactory.get(driver);
+        NavigationUI.clickMyList();
+
+        MyListsPageObject MyListsPageObject = MyListsPageObjectFactory.get(driver);
+
+        if (Platform.getInstance().isAndroid()) {
+            MyListsPageObject.openFolderByName(name_of_folder);
+        }
+
+        MyListsPageObject.swipeByArticleToDelete(first_article_title);
+        MyListsPageObject.waitForArticleToAppearBySubstring("Appium");
+    }
 }

@@ -7,7 +7,8 @@ abstract public class MyListsPageObject extends MainPageObject{
 
     public static String
             FOLDER_BY_NAME_TPL,
-            ARTICLE_BY_TITLE_TPL;
+            ARTICLE_BY_TITLE_TPL,
+            ARTICLE_BY_SUBSTRING_TPL;
 
     private static String getFolderXpathByName(String name_of_folder)
     {
@@ -17,6 +18,11 @@ abstract public class MyListsPageObject extends MainPageObject{
     private static String getSavedArticleXpathByTitle(String article_title)
     {
         return ARTICLE_BY_TITLE_TPL.replace("{TITLE}", article_title);
+    }
+
+    private static String getSavedArticleXpathBySubstring(String substring)
+    {
+        return ARTICLE_BY_SUBSTRING_TPL.replace("{SUBSTRING}", substring);
     }
 
     public MyListsPageObject(AppiumDriver driver)
@@ -50,6 +56,16 @@ abstract public class MyListsPageObject extends MainPageObject{
         this.waitForElementNotPresent(
                 article_xpath,
                 "Saved article still present with title " + article_title,
+                15
+        );
+    }
+
+    public void waitForArticleToAppearBySubstring(String article_substring)
+    {
+        String article_xpath = getFolderXpathByName(article_substring);
+        this.waitForElementPresent(
+                article_xpath,
+                "Cannot find saved article by substring " + article_substring,
                 15
         );
     }
